@@ -97,4 +97,4 @@ smpl_retarget/motion_data/
 smpl_retarget/retargeted_motion_data
 
 *.txt
-
+*~
