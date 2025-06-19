@@ -137,9 +137,7 @@ For collaborations, feedback, or further inquiries, please reach out to:
 - Weiji Xie: [xieweiji249@sjtu.edu.cn](mailto:xieweiji249@sjtu.edu.cn) or Weixin `shisoul`
 - Jinrui Han: [jrhan82@sjtu.edu.cn](mailto:jrhan82@sjtu.edu.cn)
 - Chenjia Bai (Corresponding Author): [baicj@chinatelecom.cn](mailto:baicj@chinatelecom.cn)
-- You can also join our weixin discussion group for timely Q&A:
-
-![weixin](weixin.jpeg "weixin")
+- You can also join our weixin discussion group for timely Q&A. Since the group already exceeds 200 members, you'll need to first add one of the authors on Weixin to receive an invitation to join.
 
 
 We welcome contributions and are happy to support the community in building upon this work!

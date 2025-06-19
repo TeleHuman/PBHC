@@ -60,6 +60,27 @@ def count_pose_aa(motion):
     
     return pose_aa,dof_new
 
+def EMA_smooth(trans, alpha=0.3):
+    ema = np.zeros_like(trans)
+    ema[0] = trans[0]
+    for i in range(1, len(trans)):
+        ema[i] = alpha * trans[i] + (1 - alpha) * ema[i-1]
+    return ema
+
+def correct_motion(contact_mask, verts, trans):
+    contact_indices = np.where(np.any(contact_mask != [0, 0], axis=1))[0]
+    no_contact_indices = np.where(np.all(contact_mask == [0, 0], axis=1))[0]
+    z_offset = np.zeros_like(trans[:, :, 2])
+    z_offset[contact_indices] = torch.min(
+        verts[contact_indices, :, 2], dim=1, keepdim=True
+    )[0]
+    for idx in no_contact_indices:
+        z_offset[idx] = z_offset[idx - 1]
+    trans[:, :, 2] -= z_offset
+    trans[:, :, 2] = torch.from_numpy(EMA_smooth(trans[:, :, 2]))
+    # trans = torch.from_numpy(moving_average(trans))
+    return trans
+
 def main(
     amass_root_dir: Path,
     robot_type: str = 'g1',
@@ -69,6 +90,7 @@ def main(
     upright_start: bool = True,  # By default, let's start upright (for consistency across all models).
     humanoid_mjcf_path: Optional[str] = "../description/robots/g1/smpl_humanoid.xml",
     force_retarget: bool = True,
+    correct: bool = False
 ):
     if robot_type is None:
         robot_type = humanoid_type
@@ -358,9 +380,14 @@ def main(
                     fps = 30
                     feet_l , feet_r = foot_detect(origin_global_trans[::skip])
                     contact_mask = np.concatenate([feet_l,feet_r],axis=-1)
+                    
+                    if correct:
+                        correct_global_trans = correct_motion(contact_mask, origin_verts[::skip], global_trans[::skip])
+                    else:
+                        correct_global_trans = global_trans[::skip]
 
                     new_sk_motion = retarget_fit_motion(
-                        global_trans[::skip], pose_quat_global[::skip], fps, robot_type=robot_type, render=False) 
+                        correct_global_trans, pose_quat_global[::skip], fps, robot_type=robot_type, render=False) 
 
                     print(f"Saving to {outpath}")
 
