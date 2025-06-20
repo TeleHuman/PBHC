@@ -188,6 +188,8 @@ class URCIRobot:
         
         
         self.UpdateObs()
+        self.motion_time = 0.0
+        self.ref_init_yaw[0] = self.rpy[2]
         
     def _apply_action(self, target_q):
         raise NotImplementedError("Not implemented")
@@ -306,10 +308,13 @@ class URCIRobot:
         
         self._kick_motion_res_counter = self.timer
         
-        motion_times = torch.tensor((self.timer+1) * self.dt, dtype=torch.float32)
-        motion_ids = torch.zeros((1), dtype=torch.int32)
-        self._kick_motion_res_buffer = self.motion_lib.get_motion_state(motion_ids, motion_times)
+        t0 = max(self.timer - 1, 0) * self.dt
+        t1 = self.timer * self.dt
+        motion_times = torch.tensor([t0, t1], dtype=torch.float32, device='cpu')
+        motion_ids = torch.zeros(2, dtype=torch.long, device='cpu')
+        seq = self.motion_lib.get_motion_state(motion_ids, motion_times)
         
+        self._kick_motion_res_buffer = {k: v[-1:].contiguous() for k, v in seq.items()}
         return self._kick_motion_res_buffer
     
     
@@ -339,7 +344,14 @@ class URCIRobot:
         
         
         global_ref_body_vel = ref_body_vel_extend.view(1, -1, 3)
-        local_ref_rigid_body_vel_flat = my_quat_rotate(heading_inv_rot_expand.view(-1, 4), global_ref_body_vel.view(-1, 3))
+        if heading_inv_rot_expand.shape[0] == 0:
+            local_ref_rigid_body_vel_flat = torch.zeros_like(global_ref_body_vel.view(-1, 3))
+        else:
+            local_ref_rigid_body_vel_flat = my_quat_rotate(
+                heading_inv_rot_expand.view(-1, 4),
+                global_ref_body_vel.view(-1, 3)
+            )
+        # local_ref_rigid_body_vel_flat = my_quat_rotate(heading_inv_rot_expand.view(-1, 4), global_ref_body_vel.view(-1, 3))
 
         ## diff compute - kinematic joint position
         self.dif_joint_angles = (ref_joint_pos - self.q).to(dtype=torch.float32).view(-1)
