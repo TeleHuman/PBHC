@@ -1,0 +1,58 @@
+control_dt: 0.02
+
+msg_type: "hg"     # "hg" or "go"
+imu_type: "pelvis"    # "torso" or "pelvis"
+
+lowcmd_topic: "rt/lowcmd"
+lowstate_topic: "rt/lowstate"
+
+policy_path: "example/pretrained_horse_stance_punch/exported/model_33000.onnx"
+motion_file: "example/motion_data/Horse-stance_punch.pkl"
+
+leg_joint2motor_idx: [0, 1, 2, 3, 4, 5, 
+                      6, 7, 8, 9, 10, 11, 
+                      12, 13, 14, 
+                      15, 16, 17, 18, 
+                      22, 23, 24, 25,
+                    ]
+kps: [100, 100, 100, 150, 40, 40, 
+      100, 100, 100, 150, 40, 40, 
+      400, 400, 400, 
+      100, 100, 50, 50,
+      100, 100, 50, 50,
+    ]
+kds: [2, 2, 2, 4, 2, 2, 
+      2, 2, 2, 4, 2, 2, 
+      5, 5, 5,
+      2, 2, 2, 2,
+      2, 2, 2, 2,
+    ]
+default_angles: [-0.1,  0.0,  0.0,  0.3, -0.2, 0.0, 
+                 -0.1,  0.0,  0.0,  0.3, -0.2, 0.0,
+                  0.0,  0.0,  0.0,
+                  0.2, 0.2, 0.0, 0.9, 
+                  0.2, -0.2, 0.0, 0.9, 
+                ]
+
+arm_waist_joint2motor_idx: [19, 20, 21,
+                            26, 27, 28]
+
+arm_waist_kps: [20, 20, 20,
+                20, 20, 20,]
+
+arm_waist_kds: [1, 1, 1,
+                1, 1, 1]
+
+arm_waist_target: [ 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0,]
+ang_vel_scale: 0.25
+dof_pos_scale: 1.0
+dof_vel_scale: 0.05
+action_scale: 0.25
+cmd_scale: [2.0, 2.0, 0.25]
+num_actions: 23
+num_obs: 76
+frame_stack: 5
+clip_action_limit: 100.0
+
+max_cmd: [1., 0., 1]
