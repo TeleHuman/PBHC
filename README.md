@@ -26,7 +26,7 @@
 <div id="top" align="center">
 
 [![arXiv](https://img.shields.io/badge/arXiv-2506.12851-orange)](https://arxiv.org/abs/2506.12851)
-[![](https://img.shields.io/badge/Project-%F0%9F%9A%80-pink)](https://kungfu-bot.github.io/)
+[![](https://img.shields.io/badge/Project-%F0%9F%9A%80-pink)](https://kungfubot.github.io/)
 
 </div>
 
@@ -87,7 +87,7 @@
 [![overview](overview.jpg "overview")]()
 
 
-This is the official implementation of the paper [KungfuBot: Physics-Based Humanoid Whole-Body Control for Learning Highly-Dynamic Skills](https://kungfu-bot.github.io/), supporting general motion tracking of the paper [KungfuBot2: Learning Versatile Motion Skills for Humanoid Whole-Body Control](https://arxiv.org/pdf/2509.16638).
+This is the official implementation of the paper [KungfuBot: Physics-Based Humanoid Whole-Body Control for Learning Highly-Dynamic Skills](https://kungfubot.github.io/), supporting general motion tracking of the paper [KungfuBot2: Learning Versatile Motion Skills for Humanoid Whole-Body Control](https://arxiv.org/pdf/2509.16638).
 
 
 Our paper introduces a physics-based control framework that enables humanoid robots to learn and reproduce challenging motions through multi-stage motion processing and adaptive policy training.
@@ -165,6 +165,7 @@ This codebase is under [CC BY-NC 4.0 license](https://creativecommons.org/licens
 - [PHC](https://github.com/ZhengyiLuo/PHC): We incorporate the retargeting pipeline from `PHC` into our implementation.
 - [GVHMR](https://github.com/zju3dv/GVHMR): We use `GVHMR` to extract motions from videos.
 - [IPMAN](https://github.com/sha2nkt/ipman-r): We filter motions based on `IPMAN` codebase.
+
 ## Contact
 
 Feel free to open an issue or discussion if you encounter any problems or have questions about this project.
@@ -174,7 +175,6 @@ For collaborations, feedback, or further inquiries, please reach out to:
 - Weiji Xie: [xieweiji249@sjtu.edu.cn](mailto:xieweiji249@sjtu.edu.cn) or Weixin `shisoul`
 - Jinrui Han: [jrhan82@sjtu.edu.cn](mailto:jrhan82@sjtu.edu.cn) or Weixin `Bw_rooneY`
 - Chenjia Bai (Corresponding Author): [baicj@chinatelecom.cn](mailto:baicj@chinatelecom.cn)
-- You can also join our weixin discussion group for timely Q&A. Since the group already exceeds 200 members, you'll need to first add one of the authors on Weixin to receive an invitation to join.
 
 
 We welcome contributions and are happy to support the community in building upon this work!
